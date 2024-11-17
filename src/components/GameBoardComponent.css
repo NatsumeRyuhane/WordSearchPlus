@@ -1,0 +1,68 @@
+.game-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Center everything horizontally */
+  gap: 2rem; /* Space between the title, game board, and word list */
+  padding: 2rem;
+  color: #ccc; /* General text color for the title and word list */
+}
+
+.title {
+  font-size: 3rem;
+  font-weight: bold;
+  color: #ffffff;
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.board-and-list-container {
+  display: flex;
+  justify-content: center; /* Center the game board and word list together */
+  align-items: flex-start; /* Align the word list with the top of the board */
+  gap: 3rem; /* Space between the game board and word list */
+}
+
+.board {
+  display: grid;
+  grid-template-columns: repeat(10, 40px); /* Make the grid 10x10 */
+  grid-gap: 5px;
+  background-color: #242424;
+  padding: 10px;
+  border-radius: 10px;
+}
+
+.cell {
+  width: 40px;
+  height: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #242424;
+  border: 2px solid #888; /* Make the border clearer to stand out */
+  color: #ffffff;
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+.word-list {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+
+.word-list h2 {
+  margin-bottom: 1rem;
+  font-size: 1.5rem;
+  color: #ffffff;
+}
+
+.word-list ul {
+  list-style-type: none;
+  padding: 0;
+  color: #ccc;
+}
+
+.word-list li {
+  font-size: 1.2rem;
+  margin: 0.5rem 0;
+}
