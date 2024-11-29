@@ -1,13 +1,16 @@
 class TrieNode {
     public children: Map<string, TrieNode>;
     public isEndOfWord: boolean;
+
     constructor() {
         this.children = new Map<string, TrieNode>();
         this.isEndOfWord = false;
     }
+}
 
 class Trie {
     public root: TrieNode;
+
     constructor() {
         this.root = new TrieNode();
     }

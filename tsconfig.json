@@ -3,7 +3,9 @@
     "composite": true,
     "emitDeclarationOnly": false,
     "jsx": "react-jsx",
-    "allowJs": true
+    "allowJs": true,
+    "lib": ["dom", "es2015"],
+    "esModuleInterop": true
   },
   "include": ["src/**/*"],
   "exclude": ["node_modules", "dist"]

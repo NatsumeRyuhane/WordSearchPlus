@@ -1,0 +1,29 @@
+.GameBoardCell {
+    height: 40px;
+    width: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid lightgray;
+    border-radius: 4px;
+}
+
+p {
+    margin: 0;
+}
+
+.selected {
+    background-color: lightgoldenrodyellow;
+}
+
+.hightlighted {
+    background-color: lightblue;
+}
+
+.inSolution {
+    background-color: lightgreen;
+}
+
+.GameBoardCell {
+    transition: background-color 0.2s;
+}
