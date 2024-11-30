@@ -10,18 +10,20 @@
 
 p {
     margin: 0;
+    font-weight: bold;
+    user-select: none;
 }
 
 .selected {
-    background-color: lightgoldenrodyellow;
+    background-color: darkkhaki;
 }
 
-.hightlighted {
-    background-color: lightblue;
+.highlighted {
+    background-color: darkturquoise;
 }
 
 .inSolution {
-    background-color: lightgreen;
+    background-color: darkseagreen;
 }
 
 .GameBoardCell {

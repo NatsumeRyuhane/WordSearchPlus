@@ -1,11 +1,4 @@
-.game-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center; /* Center everything horizontally */
-    gap: 2rem; /* Space between the title, game board, and word list */
-    padding: 2rem;
-    color: #ccc; /* General text color for the title and word list */
-}
+@import "../colors";
 
 .board-and-list-container {
     display: flex;
@@ -18,7 +11,7 @@
     display: grid;
     grid-template-columns: repeat(10, 40px); /* Make the grid 10x10 */
     grid-gap: 5px;
-    background-color: #242424;
+    background-color: $secondary-color; /* Darken the primary color */
     padding: 10px;
     border-radius: 10px;
 }
@@ -31,30 +24,6 @@
     align-items: center;
     background-color: #242424;
     border: 2px solid #888; /* Make the border clearer to stand out */
-    color: #ffffff;
     font-size: 1.5rem;
     font-weight: bold;
-}
-
-.word-list {
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-}
-
-.word-list h2 {
-    margin-bottom: 1rem;
-    font-size: 1.5rem;
-    color: #ffffff;
-}
-
-.word-list ul {
-    list-style-type: none;
-    padding: 0;
-    color: #ccc;
-}
-
-.word-list li {
-    font-size: 1.2rem;
-    margin: 0.5rem 0;
 }

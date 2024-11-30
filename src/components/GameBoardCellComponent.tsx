@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 
 import "./GameBoardCellComponent.css";
 
@@ -20,7 +20,7 @@ function GameBoardCellComponent({ locationX, locationY, letter }: GameBoardCellC
     const x: number = locationX;
     const y: number = locationY;
     const val: string = letter;
-    let inSolution: boolean = false;
+    let isInSolution: boolean = false;
 
 
     function handleClick() {
