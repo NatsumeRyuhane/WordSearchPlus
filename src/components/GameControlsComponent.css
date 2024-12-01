@@ -1,5 +1,11 @@
 .game-controls {
-    margin-top: 2rem;
+    flex-direction: column;
+    margin-top: auto;
     display: flex;
     justify-content: center;
+    padding-bottom: 10px;
+}
+
+.game-controls button {
+    width: 100%;
 }
