@@ -15,7 +15,7 @@ interface BoardCell {
     state: CellStates
 }
 
-interface GameBoard {
+export interface GameBoard {
     size: number,
     board: BoardCell[][]
 }
@@ -54,7 +54,15 @@ export function copyBoard(board: GameBoard): GameBoard {
     }
 }
 
-export function generateEmptyBoard(size: number = 10): GameBoard {
+export function initializeBoard(words: string[], size: number = 10): GameBoard {
+    console.trace();
+    const board = generateEmptyBoard(size);
+    placeWordsOnBoard(board, words);
+    fillBoardWithRandomLetters(board);
+    return board;
+}
+
+function generateEmptyBoard(size: number = 10): GameBoard {
     const board = [];
     for (let i = 0; i < size; i++) {
         board.push(new Array(size));
@@ -65,7 +73,8 @@ export function generateEmptyBoard(size: number = 10): GameBoard {
     return {size, board};
 }
 
-export function placeWordsOnBoard(board: GameBoard, words: string[]): void {
+function placeWordsOnBoard(board: GameBoard, words: string[]): void {
+    console.trace();
     words.forEach((word) => {
         let placed = false;
 

@@ -1,39 +1,35 @@
 import "./App.scss";
 import React, { useEffect, useState } from "react";
 
+import * as GameBoard from "./logic/GameBoard";
 import GameBoardComponent from "./components/GameBoardComponent";
-import { fillBoardWithRandomLetters, generateEmptyBoard, placeWordsOnBoard } from "./logic/GameBoard";
 import WordListComponent from "./components/WordListComponent";
 import GameControlsComponent from "./components/GameControlsComponent";
 
-const wordlist = ["ALPHA", "BETA", "GAMMA", "OMEGA", "APPLE"];
+export const GameContext = React.createContext([]);
+const wordlist = ["REACT", "ANGULAR", "VUE", "EMBER", "SVELTE"]
 
 function App() {
-    const [board, setBoard] = useState(generateEmptyBoard());
+    const [board, setBoard] = useState(GameBoard.initializeBoard(wordlist));
 
     useEffect(() => {
         document.title = "WordSearch+";
-
-        const newBoard = generateEmptyBoard();
-        placeWordsOnBoard(newBoard, wordlist);
-        fillBoardWithRandomLetters(newBoard);
-        setBoard(newBoard);
     }, []);
-
-
 
     return (
         <>
             <h1 className="title">WordSearch+</h1>
-            <div className="game-container">
-                <div>
-                    <GameBoardComponent board={board}/>
+            <GameContext.Provider value={[board, setBoard]}>
+                <div className="game-container">
+                    <div>
+                        <GameBoardComponent board={board}/>
+                    </div>
+                    <div className="aux-container">
+                        <WordListComponent wordList={wordlist}/>
+                        <GameControlsComponent/>
+                    </div>
                 </div>
-                <div className="aux-container">
-                    <WordListComponent wordList={wordlist}/>
-                    <GameControlsComponent/>
-                </div>
-            </div>
+            </GameContext.Provider>
         </>
     );
 }

@@ -1,43 +1,41 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 
 import "./GameBoardCellComponent.css";
 
+import * as GameBoard from "../logic/GameBoard";
+import { GameContext } from "../App";
+
 interface GameBoardCellComponentProps {
-    locationX: number;
-    locationY: number;
-    letter: string;
+    row: number;
+    col: number;
+    val: string;
 }
 
-enum CellState {
-    NONE,
-    SELECTED,
-    HIGHLIGHTED,
-    SOLUTION
-}
-
-function GameBoardCellComponent({ locationX, locationY, letter }: GameBoardCellComponentProps) {
-    const [state, setState] = useState<CellState>(CellState.NONE);
-    const x: number = locationX;
-    const y: number = locationY;
-    const val: string = letter;
+function GameBoardCellComponent({ row, col, val }: GameBoardCellComponentProps) {
+    const [board, setBoard] = useContext(GameContext);
+    const [state, setState] = useState<GameBoard.CellStates>(GameBoard.CellStates.NONE);
     let isInSolution: boolean = false;
 
 
     function handleClick() {
-        console.log(`cell [${x}, ${y}]: ${val} clicked`);
-        setState(CellState.SELECTED);
-        // send an event to the parent component
+        console.log(`cell [${row}, ${col}]: ${val} clicked`);
+        if (GameBoard.getCellState(board, row, col) === GameBoard.CellStates.NONE) {
+            setBoard(GameBoard.updateCellState(board, row, col, GameBoard.CellStates.IN_PATH));
+        } else if (state === GameBoard.CellStates.IN_PATH) {
+            setBoard(GameBoard.updateCellState(board, row, col, GameBoard.CellStates.NONE));
+        }
 
+        setState(GameBoard.getCellState(board, row, col));
     }
 
     function getClassnameByState() {
         const baseClassName = "GameBoardCell";
         let className = baseClassName;
-        if (state == CellState.NONE) {
+        if (state == GameBoard.CellStates.NONE) {
             className += "";
-        } else if (state === CellState.SELECTED) {
+        } else if (state === GameBoard.CellStates.IN_PATH) {
             className += " selected";
-        } else if (state === CellState.HIGHLIGHTED) {
+        } else if (state === GameBoard.CellStates.HIGHLIGHTED) {
             className += " highlighted";
         }
 
@@ -49,7 +47,7 @@ function GameBoardCellComponent({ locationX, locationY, letter }: GameBoardCellC
             className={getClassnameByState()}
             onClick={handleClick}
         >
-            <p>{letter}</p>
+            <p>{val}</p>
         </div>
     );
 }

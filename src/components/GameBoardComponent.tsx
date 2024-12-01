@@ -1,22 +1,25 @@
 import React from "react";
+
+import * as GameBoard from "../logic/GameBoard";
 import GameBoardCellComponent from "./GameBoardCellComponent";
 
 import "./GameBoardComponent.scss";
+import {getCellValue} from "../logic/GameBoard";
 
 
 interface GameBoardComponentProps {
-    board: string[][];
+    board: GameBoard.GameBoard;
 }
 
-function buildBoardFromLetterMatrix(letterMatrix: string[][]) {
-    return letterMatrix.map((row, rowIndex) => {
+function buildBoardCells(board: GameBoard.GameBoard): JSX.Element[][] {
+    return board.board.map((row, rowIndex) => {
         return row.map((letter, columnIndex) => {
             return (
                 <GameBoardCellComponent
                     key={ `${rowIndex}-${columnIndex}` }
-                    locationX={ rowIndex }
-                    locationY={ columnIndex }
-                    letter={ letter }
+                    row={ rowIndex }
+                    col={ columnIndex }
+                    val={ getCellValue(board, rowIndex, columnIndex) }
                 />
             );
         });
@@ -26,7 +29,7 @@ function buildBoardFromLetterMatrix(letterMatrix: string[][]) {
 function GameBoardComponent({ board }: GameBoardComponentProps) {
     return (
         <div className="board">
-            {buildBoardFromLetterMatrix(board)}
+            {buildBoardCells(board)}
         </div>
     );
 }
