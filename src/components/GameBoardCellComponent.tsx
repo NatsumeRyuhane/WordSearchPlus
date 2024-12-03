@@ -1,9 +1,10 @@
-import React, { useState, useContext } from "react";
+import React, {useContext, useEffect, useMemo, useState} from "react";
 
-import "./GameBoardCellComponent.css";
+import "./GameBoardCellComponent.scss";
 
 import * as GameBoard from "../logic/GameBoard";
-import { GameContext } from "../App";
+import { GameBoardContext, ActivePathContext, SolutionContext } from "../App";
+import { clickCell } from "../logic/Game"
 
 interface GameBoardCellComponentProps {
     row: number;
@@ -12,39 +13,38 @@ interface GameBoardCellComponentProps {
 }
 
 function GameBoardCellComponent({ row, col, val }: GameBoardCellComponentProps) {
-    const [board, setBoard] = useContext(GameContext);
-    const [state, setState] = useState<GameBoard.CellStates>(GameBoard.CellStates.NONE);
-    let isInSolution: boolean = false;
+    const [board, setBoard] = useContext(GameBoardContext);
+    const [activePath, setActivePath] = useContext(ActivePathContext);
+    const [solutions, setSolutions] = useContext(SolutionContext);
+    const [state, setState] = useState<GameBoard.CellStates>(GameBoard.getCellState(board, row, col));
 
+    useEffect(() => {
+        setState(GameBoard.getCellState(board, row, col));
+    }, [board]);
 
     function handleClick() {
-        console.log(`cell [${row}, ${col}]: ${val} clicked`);
-        if (GameBoard.getCellState(board, row, col) === GameBoard.CellStates.NONE) {
-            setBoard(GameBoard.updateCellState(board, row, col, GameBoard.CellStates.IN_PATH));
-        } else if (state === GameBoard.CellStates.IN_PATH) {
-            setBoard(GameBoard.updateCellState(board, row, col, GameBoard.CellStates.NONE));
-        }
-
-        setState(GameBoard.getCellState(board, row, col));
+        clickCell([row, col], [board, setBoard], [activePath, setActivePath], [solutions, setSolutions]);
     }
 
-    function getClassnameByState() {
-        const baseClassName = "GameBoardCell";
-        let className = baseClassName;
-        if (state == GameBoard.CellStates.NONE) {
+    const className = useMemo(() => {
+        // base classname
+        let className = "GameBoardCell";
+
+        if (state === GameBoard.CellStates.NONE) {
             className += "";
         } else if (state === GameBoard.CellStates.IN_PATH) {
             className += " selected";
         } else if (state === GameBoard.CellStates.HIGHLIGHTED) {
             className += " highlighted";
+        } else if (state === GameBoard.CellStates.IN_SOLUTION) {
+            className += " in-solution";
         }
-
         return className;
-    }
+    }, [state]);
 
     return (
         <div
-            className={getClassnameByState()}
+            className={className}
             onClick={handleClick}
         >
             <p>{val}</p>

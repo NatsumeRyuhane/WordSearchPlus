@@ -1,2 +1,7 @@
 $primary-color: #f7ce80;
 $secondary-color: darken($primary-color, 60%);
+
+$cell-color-neutral:$secondary-color;
+$cell-color-in-path:darkkhaki;
+$cell-color-highlighted: lighten($cell-color-neutral, 50%);
+$cell-color-in-solution:darkseagreen;

@@ -20,6 +20,12 @@ export interface GameBoard {
     board: BoardCell[][]
 }
 
+export interface Solution {
+    word: string,
+    path: [number, number][]
+}
+
+
 export function getCellValue(board: GameBoard, row: number, col: number): string | undefined {
     return board.board[row][col].val;
 }
@@ -28,7 +34,7 @@ export function getCellState(board: GameBoard, row: number, col: number): CellSt
     return board.board[row][col].state;
 }
 
-// Update the state of a cell in the board, returns a new board for react to update
+// Update the state of a cell in the board, returns a new board to use in setBoard for updating the state
 export function updateCellState(board: GameBoard, row: number, col: number, state: CellStates): GameBoard {
     return {
         ...board, board: board.board.map((r, i) => r.map((c, j) => {
@@ -47,19 +53,22 @@ function overwriteCellValue(board: GameBoard, row: number, col: number, val: str
     board.board[row][col].val = val;
 }
 
-export function copyBoard(board: GameBoard): GameBoard {
-    return {
-        size: board.size,
-        board: board.board.map((row) => row.map((cell) => ({...cell})))
-    }
-}
-
 export function initializeBoard(words: string[], size: number = 10): GameBoard {
-    console.trace();
     const board = generateEmptyBoard(size);
     placeWordsOnBoard(board, words);
     fillBoardWithRandomLetters(board);
     return board;
+}
+
+export function getWordFromPath(board: GameBoard, path: [number, number][]): string {
+    let word = "";
+    path.forEach(([row, col]) => {
+        word += getCellValue(board, row, col);
+    });
+
+    // make word capitalized
+    word = word.toUpperCase();
+    return word;
 }
 
 function generateEmptyBoard(size: number = 10): GameBoard {
