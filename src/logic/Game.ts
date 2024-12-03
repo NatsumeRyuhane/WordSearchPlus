@@ -41,22 +41,29 @@ export function clickCell(targetLocation: [number, number],
         newActivePath = newActivePath.concat([[row, col]]);
     }
 
-    function updateSolution(word: string, path: [number, number][]): void {
-        newSolutions = newSolutions.map(solution => {
-            if (solution.word === word) {
-                return { ...solution, path };
-            } else {
-                return solution;
+    function updateSolution(): void {
+        const activePathWord = GameBoard.getWordFromPath(newBoard, newActivePath);
+
+        // see if the active path is a solution
+        const isSolution = (newSolutions.find(solution => (solution.word === activePathWord && solution.path.length === 0)) !== undefined);
+
+        if (isSolution) {
+            newSolutions = newSolutions.map(solution => {
+                if (solution.word === activePathWord) {
+                    return { ...solution, path: newActivePath };
+                } else {
+                    return solution;
+                }
+            });
+
+            // mark the cells in the path as IN_SOLUTION
+            for (const [r, c] of newActivePath) {
+                newBoard = GameBoard.updateCellState(newBoard, r, c, GameBoard.CellStates.IN_SOLUTION);
             }
-        });
 
-        // mark the cells in the path as IN_SOLUTION
-        for (const [r, c] of path) {
-            newBoard = GameBoard.updateCellState(newBoard, r, c, GameBoard.CellStates.IN_SOLUTION);
+            // clear the active path
+            newActivePath = [];
         }
-
-        // clear the active path
-        newActivePath = [];
     }
 
     const [row, col] = targetLocation;
@@ -82,16 +89,7 @@ export function clickCell(targetLocation: [number, number],
 
         // otherwise, add the cell to the path
         selectCell(row, col);
-
-        // see if a new solution is found by adding this cell
-        const activePathWord = GameBoard.getWordFromPath(newBoard, newActivePath);
-        newSolutions.forEach( solution => {
-            if (solution.word === activePathWord) {
-                updateSolution(activePathWord, newActivePath);
-                return;
-            }
-        });
-
+        updateSolution();
         commitChanges();
         return;
     } else {
