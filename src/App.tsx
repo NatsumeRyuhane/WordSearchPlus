@@ -2,6 +2,7 @@ import "./App.scss";
 import React, { useEffect, useState } from "react";
 
 import * as GameBoard from "./logic/GameBoard";
+import * as Game from "./logic/Game";
 import GameBoardComponent from "./components/GameBoardComponent";
 import WordListComponent from "./components/WordListComponent";
 import GameControlsComponent from "./components/GameControlsComponent";
@@ -13,7 +14,7 @@ export const ActivePathContext = React.createContext([]);
 export const SolutionContext = React.createContext([]);
 
 
-const wordlist = ["REACT", "ANGULAR", "VUE", "EMBER", "SVELTE"]
+const wordlist = ["REACT", "ANGULAR", "VUE", "EMBER", "SVELTE", "JQUERY", "BACKBONE", "POLYMER", "AURELIA", "METEOR"].sort();
 
 
 function App() {
